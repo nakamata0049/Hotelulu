@@ -49,12 +49,17 @@ footer {
 }
 
 .samuraitravel-page-link:hover {
-    color: #407784;
+	color: #407784;
 }
- 
+
 .samuraitravel-active {
 	background-color: #5196a6 !important;
-    border-color: #5196a6 !important;
+	border-color: #5196a6 !important;
+}
+
+.samuraitravel-pre-wrap {
+	/* 改行文字で行を折り返す */
+	white-space: pre-wrap;
 }
 
 @media screen and (min-width: 1400px) {

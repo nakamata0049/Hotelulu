@@ -40,7 +40,7 @@
 								<form method="get" th:action="@{/admin/houses}" class="mb-3">
 									<div class="input-group">
 										<input type="text" class="form-control" name="keyword" th:value="${keyword}"
-											placeholder="民宿名"/>
+											placeholder="民宿名" />
 										<button type="submit"
 											class="btn text-white shadow-sm samuraitravel-btn">検索</button>
 									</div>
@@ -68,7 +68,7 @@
 									<td th:text="${house.getPostalCode()}"></td>
 									<td th:text="${house.getAddress()}"></td>
 									<td th:text="${house.getPhoneNumber()}"></td>
-									<td><a href="#">詳細</a></td>
+									<td><a th:href="@{/admin/houses/__${house.getId()}__}">詳細</a></td>
 								</tr>
 							</tbody>
 						</table>
