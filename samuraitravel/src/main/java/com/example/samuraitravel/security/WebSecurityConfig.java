@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -13,19 +14,26 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class WebSecurityConfig {
+	private final UserDetailsService userDetailsService;
+	
+	public WebSecurityConfig(UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
+				.userDetailsService(userDetailsService)
 				.authorizeHttpRequests((requests) -> requests
-						.requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/", "/signup/**")
-						.permitAll() // すべてのユーザーにアクセスを許可するURL           
+						.requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/", "/signup/**").permitAll() // すべてのユーザーにアクセスを許可するURL           
 						.requestMatchers("/admin/**").hasRole("ADMIN") // 管理者にのみアクセスを許可するURL
 						.anyRequest().authenticated() // 上記以外のURLはログインが必要（会員または管理者のどちらでもOK）
 				)
 				.formLogin((form) -> form
 						.loginPage("/login") // ログインページのURL
 						.loginProcessingUrl("/login") // ログインフォームの送信先URL
+						.usernameParameter("username")   // ← name="email" に合わせる
+					    .passwordParameter("password") 
 						.defaultSuccessUrl("/?loggedIn") // ログイン成功時のリダイレクト先URL
 						.failureUrl("/login?error") // ログイン失敗時のリダイレクト先URL
 						.permitAll())
