@@ -10,7 +10,6 @@
 </head>
 
 <body>
-	<p>Hello, world!</p>
 	<div class="samuraitravel-wrapper">
 		<!-- ヘッダー -->
 		<div th:replace="~{fragment :: header}"></div>
@@ -25,7 +24,7 @@
 					ログアウトしました。
 				</div>
 				
-				<div th:if="${successMessage}" class="alert alet-info">
+				<div th:if="${successMessage}" class="alert alert-info">
 					<span th:text="${successMessage}"></span>
 				</div>
 			</div>
